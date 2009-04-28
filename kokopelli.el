@@ -93,6 +93,7 @@
                                     (equal mode "c")
                                     (equal mode "cpp")
                                     (equal mode "cc")
+                                    (equal mode "c/l")
                                     (equal mode "c"))
                                 "\\(^\\([^ \t\n#/\\*]+\\)\\([0-9a-zA-Z_ \t\\*]+\\)([^\n;]*\\)$")
                                ((or (equal mode "perl")
