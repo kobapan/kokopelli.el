@@ -26,13 +26,13 @@
 ;; add your .emacs
 ;;
 ;; (require 'kokopelli)
-;; (define-key global-map "\C-ck" 'kokopelli-sing)
+;; (define-key global-map [f12] 'kokopelli-sing)
 ;;
 
 ;; Usage
 ;;
-;; Type C-ck to list functions.
-;; Type SPACE or ENTER to jump to it.
+;; Type F12 to list up functions.
+;; To jump to it, type SPACE or ENTER or double left click on any function in the list.
 ;;
 
 ;; Code
@@ -48,7 +48,7 @@
            (let ((buffer-to-back (current-buffer))
                  (kokopelli-buffer-name "*kokopelli*"))
              (save-excursion
-               (if (null (buffer-live-p kokopelli-buffer-name))
+               (if (not (get-buffer kokopelli-buffer-name))
                    (progn
                      (split-window nil nil t)
                      (pop-to-buffer kokopelli-buffer-name))
