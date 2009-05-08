@@ -17,7 +17,7 @@
 ;; along with this program; if not, write to the Free Software
 ;; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 ;;
-;; Version    : $Id$
+;; Date       : 2009-05-08 17:15:37
 ;; Author     : Kobayashi Takaaki <kobapan at gmail dot com>
 
 ;; Installation
@@ -41,8 +41,9 @@
   (interactive)
   (let (listing-regexp kokopelli-buffer
         (mode (downcase mode-name))
-        (file-path (when (not (null buffer-file-name))
-                     buffer-file-name))
+        (file-path (if (not (null buffer-file-name))
+                       buffer-file-name
+                     (buffer-name)))
         (init-kokopelli
          (lambda (file-name)
            (let ((buffer-to-back (current-buffer))
