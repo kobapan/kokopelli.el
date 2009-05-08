@@ -69,8 +69,8 @@
              (setq buffer-read-only nil) ; unlock
              (setq start (point))
              (insert string)
-             (setq end (point))
              (insert "\n")
+             (setq end (point))
              (put-text-property start end 'goto place)
              (setq buffer-read-only t)   ; lock
              (set-buffer buffer-to-back))))
@@ -110,11 +110,12 @@
                                     (equal mode "ruby-mode")
                                     (equal mode "rb"))
                                 "^\\([ \t]*\\(class\\|module\\|def\\|alias\\)[ \t]+\\(.*\\)\\)$")
-                               ((or (equal mode "php")
-                                    (equal mode "php-mode"))
-                                "^\\([ \t]*\\(static\\)*[ \t]*\\(public\\|private\\|protected\\)*[ \t]*\\(static\\)*[ \t]*\\(function\\|class\\)[ \t]+\\([^\(\{]*\\).*\\)$")
-                               ((or (equal mode "html")
-                                    (equal mode "html-mode"))
+                               ((or (equal mode "js")
+                                    (equal mode "javascript"))
+                                "^\\([ \t]*\\(.*\\)[ \t]*=?[ \t]*\\(function\\)[ \t]*=?[ \t]*\\(.*\\)\\|\\([ \t]*\\(.*\\)[ \t]*=[ \t]*{\\)\\)$")
+                               ((equal mode "php")
+                                "^\\([ \t]*\\(public\\|private\\|protected\\)*[ \t]*\\(function\\|class\\)[ \t]+\\([^\(\{]*\\).*\\)$")
+                               ((equal mode "html")
                                 "^\\([ \t]*<[Hh][123456].*\\|[ \t]*<[Hh][Ee][Aa][Dd].*\\|[ \t]*<[Bb][Oo][Dd][Yy].*\\|[ \t]*<[Ff][Oo][Rr][Mm].*\\)$")
                                ((equal mode "text")
                                 "^\\([ \t]*[1234567890]+[\.]+.*\\)$")
@@ -132,7 +133,7 @@
                                     (equal mode "bas"))
                                 "^\\(\\([Pp][Rr][Ii][Vv][Aa][Tt][Ee]\\|[Pp][Uu][Bb][Ll][Ii][Cc]\\|[Ss][Uu][Bb]\\|[F][U][N][C][T][I][O][N]\\)[ \t]+.*\\)$")
                                (t
-                                (error "invalied mode"))))
+                                (error (concat "sorry. mode not supported [" mode "].")))))
     (setq kokopelli-buffer (funcall init-kokopelli file-path))
     (save-excursion
       (goto-char (point-min))
@@ -150,12 +151,13 @@
         aim-point
         file-name)
     (save-excursion
-      (setq aim-point (get-text-property (point) 'goto))
-      (goto-char (point-min))
-      (setq file-name (buffer-substring (point) (progn (end-of-line) (point))))
-      (pop-to-buffer (find-file-noselect file-name))
-      (goto-char aim-point)
-      (pop-to-buffer buffer-to-back))))
+      (when (setq aim-point (get-text-property (point) 'goto))
+        (progn
+          (goto-char (point-min))
+          (setq file-name (buffer-substring (point) (progn (end-of-line) (point))))
+          (pop-to-buffer (find-file-noselect file-name))
+          (goto-char aim-point)
+          (pop-to-buffer buffer-to-back))))))
                   
 (provide 'kokopelli)
 ;; kokopelli.el
