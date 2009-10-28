@@ -17,7 +17,7 @@
 ;; along with this program; if not, write to the Free Software
 ;; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 ;;
-;; Date       : 2009-05-08 17:15:37
+;; Date       : 2009-10-28 19:11:37
 ;; Author     : Kobayashi Takaaki <kobapan at gmail dot com>
 
 ;; Installation
@@ -32,7 +32,10 @@
 ;; Usage
 ;;
 ;; Type F12 to list up functions.
+;;
 ;; To jump to it, type SPACE or ENTER or double left click on any function in the list.
+;;
+;; Type q to quit kokopelli.
 ;;
 
 ;; Code
@@ -83,6 +86,7 @@
              (define-key map [double-mouse-1] 'kokopelli-jump)
              (define-key map "\r" 'kokopelli-jump)
              (define-key map " " 'kokopelli-jump)
+             (define-key map "q" 'kokopelli-quit)
              (use-local-map map)))))
     (setq listing-regexp (cond ((or (equal mode "emacs-lisp")
                                     (equal mode "e-lisp")
@@ -159,6 +163,14 @@
           (pop-to-buffer (find-file-noselect file-name))
           (goto-char aim-point)
           (pop-to-buffer buffer-to-back))))))
+
+(defun kokopelli-quit ()
+  "interactive function quit kokopelli mode"
+  (interactive)
+  (let ((kokopelli-buffer-name "*kokopelli*"))
+    (delete-windows-on kokopelli-buffer-name)
+    (kill-buffer kokopelli-buffer-name)))
+
                   
 (provide 'kokopelli)
 ;; kokopelli.el
