@@ -17,7 +17,7 @@
 ;; along with this program; if not, write to the Free Software
 ;; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 ;;
-;; Date       : 2009-10-28 19:11:37
+;; Date       : 2009-10-29 19:15:37
 ;; Author     : Kobayashi Takaaki <kobapan at gmail dot com>
 
 ;; Installation
@@ -50,12 +50,15 @@
         (init-kokopelli
          (lambda (file-name)
            (let ((buffer-to-back (current-buffer))
-                 (kokopelli-buffer-name "*kokopelli*"))
+                 (kokopelli-buffer-name "*kokopelli*")
+                 (pop-up-frames nil)
+                 w)
              (save-excursion
                (if (not (get-buffer kokopelli-buffer-name))
                    (progn
-                     (split-window nil nil t)
-                     (pop-to-buffer kokopelli-buffer-name))
+                     (setq w (split-window nil nil t))
+                     (select-window w)
+                     (switch-to-buffer kokopelli-buffer-name))
                  (set-buffer kokopelli-buffer-name))
                (setq buffer-read-only nil) ; unlock
                (erase-buffer)
@@ -167,9 +170,14 @@
 (defun kokopelli-quit ()
   "interactive function quit kokopelli mode"
   (interactive)
-  (let ((kokopelli-buffer-name "*kokopelli*"))
+  (let ((kokopelli-buffer-name "*kokopelli*")
+        file-name)
+    (set-buffer kokopelli-buffer-name)
+    (goto-char (point-min))
+    (setq file-name (buffer-substring (point) (progn (end-of-line) (point))))
     (delete-windows-on kokopelli-buffer-name)
-    (kill-buffer kokopelli-buffer-name)))
+    (kill-buffer kokopelli-buffer-name)
+    (pop-to-buffer (find-file-noselect file-name))))
 
                   
 (provide 'kokopelli)
