@@ -19,6 +19,7 @@
 ;;
 ;; Date       : 2009-10-29 19:15:37
 ;; Author     : Kobayashi Takaaki <kobapan at gmail dot com>
+;; $Id$
 
 ;; Installation
 ;; 
