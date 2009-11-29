@@ -17,13 +17,12 @@
 ;; along with this program; if not, write to the Free Software
 ;; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 ;;
-;; Date       : 2009-10-29 19:15:37
+;; Date       : 2009-11-29 21:10:00
 ;; Author     : Kobayashi Takaaki <kobapan at gmail dot com>
-;; $Id$
 
 ;; Installation
-;; 
-;; Add kokopelli.el to your load path 
+;;
+;; Add kokopelli.el to your load path
 ;; add your .emacs
 ;;
 ;; (require 'kokopelli)
@@ -39,7 +38,19 @@
 ;; Type q to quit kokopelli.
 ;;
 
+;; Options
+;;
+;; If you want to close kokopelli window with your selecting the function, add your .emacs
+;;
+;; (setq kokopelli-auto-quit t)
+;;
+
+
 ;; Code
+(defcustom kokopelli-auto-quit nil
+"t : kokopelli window close when you select a function.
+nil : kokopelli window remains untill you run `q' command.")
+
 (defun kokopelli-sing ()
   "interactive to create buffer listing class and function"
   (interactive)
@@ -149,7 +160,7 @@
       (while (re-search-forward listing-regexp nil t)
         (funcall insert-into-kokopelli
                  kokopelli-buffer
-                 (buffer-substring (match-beginning 1) (match-end 1)) 
+                 (buffer-substring (match-beginning 1) (match-end 1))
                  (match-beginning 1))))
     (funcall kokopelli-mode kokopelli-buffer)))
 
@@ -166,7 +177,8 @@
           (setq file-name (buffer-substring (point) (progn (end-of-line) (point))))
           (pop-to-buffer (find-file-noselect file-name))
           (goto-char aim-point)
-          (pop-to-buffer buffer-to-back))))))
+          (pop-to-buffer buffer-to-back)
+          (when kokopelli-auto-quit (kokopelli-quit)))))))
 
 (defun kokopelli-quit ()
   "interactive function quit kokopelli mode"
@@ -180,7 +192,7 @@
     (kill-buffer kokopelli-buffer-name)
     (pop-to-buffer (find-file-noselect file-name))))
 
-                  
+
 (provide 'kokopelli)
 ;; kokopelli.el
 
