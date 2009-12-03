@@ -17,7 +17,7 @@
 ;; along with this program; if not, write to the Free Software
 ;; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 ;;
-;; Date       : 2009-11-29 21:10:00
+;; Date       : 2009-12-04 00:10:00
 ;; Author     : Kobayashi Takaaki <kobapan at gmail dot com>
 
 ;; Installation
@@ -44,12 +44,24 @@
 ;;
 ;; (setq kokopelli-auto-quit t)
 ;;
+;; If you want to change the position where the function you selected will appear, use
+;;
+;; kokopelli-margin-top
+;;
+;; eg. With 0 , the function will appear at the top of the window.
+;; (setq kokopelli-margin-top 0)
+;;
+;;
 
 
 ;; Code
 (defcustom kokopelli-auto-quit nil
 "t : kokopelli window close when you select a function.
 nil : kokopelli window remains untill you run `q' command.")
+
+(defcustom kokopelli-margin-top 4
+"the top margin of the function to be shown.
+0 : no margin")
 
 (defun kokopelli-sing ()
   "interactive to create buffer listing class and function"
@@ -177,6 +189,7 @@ nil : kokopelli window remains untill you run `q' command.")
           (setq file-name (buffer-substring (point) (progn (end-of-line) (point))))
           (pop-to-buffer (find-file-noselect file-name))
           (goto-char aim-point)
+          (recenter-top-bottom kokopelli-margin-top)
           (pop-to-buffer buffer-to-back)
           (when kokopelli-auto-quit (kokopelli-quit)))))))
 
