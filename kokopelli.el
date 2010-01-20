@@ -63,10 +63,15 @@ nil : kokopelli window remains untill you run `q' command.")
 "the top margin of the function to be shown.
 0 : no margin")
 
+(defvar kokopelli-window-to-back nil
+"the window that the cursor appears in when kokopelli-sing run.")
+
 (defun kokopelli-sing ()
   "interactive to create buffer listing class and function"
   (interactive)
-  (let (listing-regexp kokopelli-buffer
+  (setq kokopelli-window-to-back (selected-window))
+  (let (listing-regexp
+        kokopelli-buffer
         (mode (downcase mode-name))
         (file-path (if (not (null buffer-file-name))
                        buffer-file-name
@@ -89,6 +94,7 @@ nil : kokopelli window remains untill you run `q' command.")
                (insert file-name "\n")
                (setq buffer-read-only t)   ; lock
                (goto-char (point-max))
+               (select-window kokopelli-window-to-back)
                (pop-to-buffer buffer-to-back)
                (get-buffer kokopelli-buffer-name)))))
         (insert-into-kokopelli
@@ -146,7 +152,7 @@ nil : kokopelli window remains untill you run `q' command.")
                                     (equal mode "javascript"))
                                 "^\\([ \t]*\\(.*\\)[ \t]*=?[ \t]*\\(function\\)[ \t]*=?[ \t]*\\(.*\\)\\|\\([ \t]*\\(.*\\)[ \t]*=[ \t]*{\\)\\)$")
                                ((equal mode "php")
-                                "^\\([ \t]*\\(public\\|private\\|protected\\)*[ \t]*\\(function\\|class\\)[ \t]+\\([^\(\{]*\\).*\\)$")
+                                "^\\([ \t]*\\(\\(public\\|private\\|static\\|protected\\)[ \t]+\\)*\\(function\\|class\\)[ \t]+\\([^\(\{]*\\).*\\)$")
                                ((equal mode "html")
                                 "^\\([ \t]*<[Hh][123456].*\\|[ \t]*<[Hh][Ee][Aa][Dd].*\\|[ \t]*<[Bb][Oo][Dd][Yy].*\\|[ \t]*<[Ff][Oo][Rr][Mm].*\\)$")
                                ((equal mode "text")
@@ -187,6 +193,7 @@ nil : kokopelli window remains untill you run `q' command.")
         (progn
           (goto-char (point-min))
           (setq file-name (buffer-substring (point) (progn (end-of-line) (point))))
+          (select-window kokopelli-window-to-back)
           (pop-to-buffer (find-file-noselect file-name))
           (goto-char aim-point)
           (if (>= (string-to-number emacs-version) 23)
@@ -205,6 +212,7 @@ nil : kokopelli window remains untill you run `q' command.")
     (setq file-name (buffer-substring (point) (progn (end-of-line) (point))))
     (delete-windows-on kokopelli-buffer-name)
     (kill-buffer kokopelli-buffer-name)
+    (select-window kokopelli-window-to-back)
     (pop-to-buffer (find-file-noselect file-name))))
 
 
