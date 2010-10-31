@@ -17,7 +17,7 @@
 ;; along with this program; if not, write to the Free Software
 ;; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 ;;
-;; Date       : 2009-12-04 00:10:00
+;; Date       : 2010-10-31 21:34:00
 ;; Author     : Kobayashi Takaaki <kobapan at gmail dot com>
 
 ;; Installation
@@ -40,18 +40,22 @@
 
 ;; Options
 ;;
-;; If you want to close kokopelli window with your selecting the function, add your .emacs
+;; 1. If you want to close kokopelli window with your selecting the function, add your .emacs
 ;;
 ;; (setq kokopelli-auto-quit t)
 ;;
-;; If you want to change the position where the function you selected will appear, use
+;; 2. If you want to change the position where the function you selected will appear, use
 ;;
 ;; kokopelli-margin-top
 ;;
 ;; eg. With 0 , the function will appear at the top of the window.
 ;; (setq kokopelli-margin-top 0)
 ;;
+;; 3. Window splits vertically by default , when you call kokopelli. If horizontal splits you need, add your .emacs
 ;;
+;; (setq kokopelli-split-vertical nil)
+;;
+
 
 
 ;; Code
@@ -62,6 +66,10 @@ nil : kokopelli window remains untill you run `q' command.")
 (defcustom kokopelli-margin-top 4
 "the top margin of the function to be shown.
 0 : no margin")
+
+(defcustom kokopelli-split-vertical t
+"the direction of spliting the window.
+t : window splits vertically , nil : window splits horizontally")
 
 (defvar kokopelli-window-to-back nil
 "the window that the cursor appears in when kokopelli-sing run.")
@@ -85,7 +93,7 @@ nil : kokopelli window remains untill you run `q' command.")
              (save-excursion
                (if (not (get-buffer kokopelli-buffer-name))
                    (progn
-                     (setq w (split-window nil nil t))
+                     (setq w (split-window nil nil kokopelli-split-vertical))
                      (select-window w)
                      (switch-to-buffer kokopelli-buffer-name))
                  (set-buffer kokopelli-buffer-name))
@@ -218,6 +226,4 @@ nil : kokopelli window remains untill you run `q' command.")
 
 (provide 'kokopelli)
 ;; kokopelli.el
-
-
 
