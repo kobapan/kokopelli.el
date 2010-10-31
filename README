@@ -20,4 +20,6 @@ Then Jump to the definition.
 * If you want to change the position where the function you selected will appear, add your .emacs
 (setq kokopelli-margin-top 0)
 0 means the function will appear at the top of the window.
-
+* Window splits vertically by default , when you call kokopelli. If horizontal splits you need, add your .emacs
+(setq kokopelli-split-vertical nil)
+t : window splits vertically , nil : window splits horizontally
