@@ -125,7 +125,6 @@ t : window splits vertically , nil : window splits horizontally")
              (set-buffer buffer-to-back))))
         (kokopelli-mode
          (lambda (kokopelli-buffer)
-           ;(let ((map (make-sparse-keymap)))
            (let ((map (copy-keymap (current-local-map))))
              (pop-to-buffer kokopelli-buffer)
              (setq mode-name "kokopelli-mode")
