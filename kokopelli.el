@@ -1,6 +1,10 @@
-;; kokopelli.el -*-mode: Emacs-Lisp; tab-width: 4;-*- .
+;; -*-mode: Emacs-Lisp; tab-width: 4;-*- .
 
-;; List function declaration and jump to it.
+;; Information: <bookmark-buffers.el>
+;;
+;; List function's declaration and jump to it.
+;;
+
 ;; Copyright (C) 2009, Kobayashi Takaaki <kobapan at gmail dot com>
 ;;
 ;; This program is free software; you can redistribute it and/or modify
@@ -17,8 +21,8 @@
 ;; along with this program; if not, write to the Free Software
 ;; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 ;;
-;; Date       : 2010-10-31 21:34:00
-;; Author     : Kobayashi Takaaki <kobapan at gmail dot com>
+;; Last Modified: <2015/03/23 06:44:24>
+;; Auther: <kobapan>
 
 ;; Installation
 ;;
@@ -121,7 +125,8 @@ t : window splits vertically , nil : window splits horizontally")
              (set-buffer buffer-to-back))))
         (kokopelli-mode
          (lambda (kokopelli-buffer)
-           (let ((map (make-sparse-keymap)))
+           ;(let ((map (make-sparse-keymap)))
+           (let ((map (copy-keymap (current-local-map))))
              (pop-to-buffer kokopelli-buffer)
              (setq mode-name "kokopelli-mode")
              (define-key map [double-mouse-1] 'kokopelli-jump)
