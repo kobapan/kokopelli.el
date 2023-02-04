@@ -29,7 +29,7 @@
 ;; Add kokopelli.el to your load path
 ;; add your .emacs
 ;;
-;; (require 'kokopelli)
+;; (autoload 'kokopelli-sing "kokopelli")
 ;; (define-key global-map [f12] 'kokopelli-sing)
 ;;
 
@@ -145,7 +145,7 @@ t : window splits vertically , nil : window splits horizontally")
                                     (equal mode "gauche")
                                     (equal mode "gauche-mode")
                                     (equal mode "lisp interaction"))
-                                "^\\([ \t]*(\\(defun\\|defmacro\\|define\\|defvar\\|defconst\\|defconstant\\|defclass\\|defcustom\\|defgroup\\|defmethod\\)[ \t]+\\([^ ;\t\n]*\\)\\([ ;\t\n]+.*\\)\\)$")
+                                "^\\([ \t]*(\\(define-method\\|defun\\|defmacro\\|define\\|defvar\\|defconst\\|defconstant\\|defclass\\|defcustom\\|defgroup\\|defmethod\\)[ \t]+\\([^ ;\t\n]*\\)\\([ ;\t\n]+.*\\)\\)$")
                                ((or (equal mode "c++")
                                     (equal mode "c")
                                     (equal mode "cpp")
