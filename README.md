@@ -10,7 +10,7 @@ Add kokopelli.el to your load path
 
 Add your .emacs
 ```cl
-(require 'kokopelli)
+(autoload 'kokopelli-sing "kokopelli")
 (define-key global-map [f12] 'kokopelli-sing)
 ```
 
